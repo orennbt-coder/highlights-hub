@@ -1,0 +1,833 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Highlights Hub</title>
+  <style>
+    :root {
+      --bg: #0b0d12;
+      --card: #121622;
+      --card2: #0f1320;
+      --text: #e8ecf6;
+      --muted: #aab3c7;
+      --line: rgba(255,255,255,0.10);
+      --accent: #7aa2ff;
+      --danger: #ff6b6b;
+      --ok: #3ddc97;
+      --shadow: 0 10px 30px rgba(0,0,0,0.35);
+      --radius: 14px;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      color: var(--text);
+      background: radial-gradient(900px 500px at 20% 0%, rgba(122,162,255,0.18), transparent 65%),
+                  radial-gradient(900px 500px at 90% 20%, rgba(61,220,151,0.10), transparent 60%),
+                  var(--bg);
+      min-height: 100vh;
+    }
+
+    a { color: inherit; }
+
+    .container {
+      max-width: 1050px;
+      margin: 0 auto;
+      padding: 18px 14px 36px;
+    }
+
+    header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .brand {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .brand h1 {
+      font-size: 18px;
+      margin: 0;
+      letter-spacing: 0.2px;
+    }
+
+    .brand p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.35;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 10px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.04);
+      border-radius: 999px;
+      font-size: 12px;
+      color: var(--muted);
+      user-select: none;
+      white-space: nowrap;
+    }
+
+    .tabs {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      padding: 10px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.035);
+      border-radius: var(--radius);
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .tab {
+      appearance: none;
+      border: 1px solid transparent;
+      background: transparent;
+      color: var(--muted);
+      padding: 10px 12px;
+      border-radius: 12px;
+      cursor: pointer;
+      font-weight: 600;
+      letter-spacing: 0.2px;
+      transition: 160ms ease;
+      flex: 0 0 auto;
+    }
+    .tab:hover { background: rgba(255,255,255,0.05); color: var(--text); }
+    .tab.active {
+      background: rgba(122,162,255,0.16);
+      border-color: rgba(122,162,255,0.35);
+      color: var(--text);
+    }
+
+    .controls {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 10px;
+      margin: 12px 0 12px;
+    }
+
+    .search {
+      position: relative;
+    }
+
+    input[type="search"] {
+      width: 100%;
+      padding: 12px 12px 12px 40px;
+      border-radius: 12px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.03);
+      color: var(--text);
+      outline: none;
+      font-size: 14px;
+    }
+    input[type="search"]::placeholder { color: rgba(170,179,199,0.75); }
+
+    .search svg {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      opacity: 0.75;
+    }
+
+    .btn {
+      appearance: none;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.035);
+      color: var(--text);
+      padding: 10px 12px;
+      border-radius: 12px;
+      cursor: pointer;
+      font-weight: 700;
+      letter-spacing: 0.2px;
+      transition: 160ms ease;
+      white-space: nowrap;
+    }
+    .btn:hover { background: rgba(255,255,255,0.06); }
+    .btn:active { transform: translateY(1px); }
+    .btn.primary {
+      border-color: rgba(122,162,255,0.40);
+      background: rgba(122,162,255,0.16);
+    }
+
+    .status {
+      margin: 10px 0 14px;
+      padding: 12px;
+      border-radius: var(--radius);
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.03);
+      color: var(--muted);
+      display: none;
+    }
+    .status.show { display: block; }
+    .status.error { border-color: rgba(255,107,107,0.35); background: rgba(255,107,107,0.10); color: var(--text); }
+    .status.ok { border-color: rgba(61,220,151,0.35); background: rgba(61,220,151,0.10); color: var(--text); }
+
+    .grid {
+      display: grid;
+      gap: 10px;
+      grid-template-columns: 1fr;
+    }
+
+    @media (min-width: 740px) {
+      .grid { grid-template-columns: 1fr 1fr; }
+      header { align-items: center; }
+      .brand h1 { font-size: 20px; }
+    }
+
+    .card {
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg, rgba(255,255,255,0.035), rgba(255,255,255,0.02));
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      cursor: pointer;
+      transition: 170ms ease;
+      display: grid;
+      grid-template-columns: 140px 1fr;
+      min-height: 92px;
+    }
+    .card:hover { transform: translateY(-1px); border-color: rgba(255,255,255,0.18); }
+    .thumb {
+      width: 140px;
+      height: 92px;
+      background: rgba(255,255,255,0.05);
+      display: block;
+      object-fit: cover;
+    }
+    .meta {
+      padding: 10px 12px 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      min-width: 0;
+    }
+    .title {
+      font-size: 14px;
+      line-height: 1.25;
+      margin: 0;
+      font-weight: 800;
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+    }
+    .subrow {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      align-items: center;
+      color: var(--muted);
+      font-size: 12px;
+    }
+    .badge {
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.03);
+      padding: 3px 8px;
+      border-radius: 999px;
+      font-weight: 800;
+      letter-spacing: 0.3px;
+      color: var(--text);
+    }
+    .dot { opacity: 0.7; }
+
+    /* Player view */
+    .player {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.75);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 14px;
+      z-index: 20;
+    }
+    .player.show { display: flex; }
+    .playerPanel {
+      width: min(980px, 100%);
+      background: linear-gradient(180deg, rgba(18,22,34,0.97), rgba(12,14,18,0.98));
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+    .playerTop {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 12px 12px;
+      border-bottom: 1px solid var(--line);
+      background: rgba(255,255,255,0.02);
+    }
+    .playerTop .left {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      min-width: 0;
+    }
+    .playerTop .h {
+      font-weight: 900;
+      font-size: 14px;
+      margin: 0;
+      line-height: 1.25;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      max-width: 68vw;
+    }
+    .closeBtn {
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.04);
+      color: var(--text);
+      padding: 8px 10px;
+      border-radius: 12px;
+      cursor: pointer;
+      font-weight: 900;
+    }
+    .frameWrap {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background: #000;
+    }
+    .frameWrap iframe {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+
+    .footerNote {
+      margin-top: 14px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.4;
+      opacity: 0.95;
+    }
+
+    .mono {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 12px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="brand">
+        <h1>Highlights Hub</h1>
+        <p>Latest official highlights from NFL, MLB, and NBA. Shorts excluded. Mobile-first web.</p>
+      </div>
+      <div class="pill" id="cachePill" title="Cache status">
+        <span>Cache:</span> <span id="cacheText">—</span>
+      </div>
+    </header>
+
+    <nav class="tabs" id="tabs"></nav>
+
+    <div class="controls">
+      <div class="search">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15Z" stroke="currentColor" stroke-width="2" opacity="0.9"/>
+          <path d="M16.5 16.5 21 21" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity="0.9"/>
+        </svg>
+        <input id="searchInput" type="search" placeholder="Search titles in this tab…" autocomplete="off" />
+      </div>
+      <button class="btn primary" id="refreshBtn" type="button">Refresh</button>
+    </div>
+
+    <div class="status" id="statusBox"></div>
+
+    <div class="grid" id="list"></div>
+
+    <p class="footerNote">
+      Tip: If you host this on GitHub Pages, restrict your YouTube API key to your domain in Google Cloud Console.
+      For local testing, run a tiny server: <span class="mono">python -m http.server 8000</span>
+    </p>
+  </div>
+
+  <!-- Player overlay -->
+  <div class="player" id="player">
+    <div class="playerPanel">
+      <div class="playerTop">
+        <div class="left">
+          <span class="badge" id="playerLeague">—</span>
+          <p class="h" id="playerTitle">—</p>
+        </div>
+        <button class="closeBtn" id="closePlayer" type="button">Close</button>
+      </div>
+      <div class="frameWrap">
+        <iframe id="playerFrame" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    /***********************
+     * USER CONFIG
+     ***********************/
+    const YT_API_KEY = "PASTE_YOUR_YOUTUBE_DATA_API_KEY_HERE";
+
+    // Feeds (handles)
+    const LEAGUES = [
+      { key: "NFL", handle: "@NFL" },
+      { key: "MLB", handle: "@MLB" },
+      { key: "NBA", handle: "@NBA" },
+    ];
+
+    // Tweaks you might want to adjust:
+    const MAX_VIDEOS_PER_LEAGUE = 200;       // after filtering Shorts
+    const RECENCY_DAYS = 90;                 // only include videos published in last N days
+    const SHORTS_MAX_SECONDS = 59;           // exclude <= 59s (Shorts). Raise to 89 if you want stricter.
+    const CACHE_TTL_MINUTES = 30;            // cache results in localStorage for N minutes
+
+    /***********************
+     * INTERNALS
+     ***********************/
+    const TABS = ["Latest", ...LEAGUES.map(l => l.key)];
+    let activeTab = "Latest";
+    let allVideos = [];     // normalized merged list
+    let perLeague = {};     // key => list
+    let filteredVideos = []; // current tab (post-search)
+    let uploadsPlaylistIds = {}; // key => playlistId
+
+    const els = {
+      tabs: document.getElementById("tabs"),
+      list: document.getElementById("list"),
+      status: document.getElementById("statusBox"),
+      search: document.getElementById("searchInput"),
+      refresh: document.getElementById("refreshBtn"),
+      cacheText: document.getElementById("cacheText"),
+      player: document.getElementById("player"),
+      closePlayer: document.getElementById("closePlayer"),
+      playerFrame: document.getElementById("playerFrame"),
+      playerTitle: document.getElementById("playerTitle"),
+      playerLeague: document.getElementById("playerLeague"),
+    };
+
+    function showStatus(message, variant = "info") {
+      els.status.className = "status show";
+      if (variant === "error") els.status.classList.add("error");
+      if (variant === "ok") els.status.classList.add("ok");
+      els.status.textContent = message;
+    }
+
+    function hideStatus() {
+      els.status.className = "status";
+      els.status.textContent = "";
+    }
+
+    function formatDate(iso) {
+      try {
+        const d = new Date(iso);
+        return new Intl.DateTimeFormat(undefined, { year: "numeric", month: "short", day: "2-digit" }).format(d);
+      } catch {
+        return iso;
+      }
+    }
+
+    function secondsFromIsoDuration(iso) {
+      // ISO 8601 duration like PT1H2M10S / PT45S / PT3M
+      const match = iso.match(/^PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?$/);
+      if (!match) return 0;
+      const h = parseInt(match[1] || "0", 10);
+      const m = parseInt(match[2] || "0", 10);
+      const s = parseInt(match[3] || "0", 10);
+      return (h * 3600) + (m * 60) + s;
+    }
+
+    function formatDuration(sec) {
+      if (!sec || sec <= 0) return "—";
+      const h = Math.floor(sec / 3600);
+      const m = Math.floor((sec % 3600) / 60);
+      const s = sec % 60;
+      if (h > 0) return `${h}:${String(m).padStart(2,"0")}:${String(s).padStart(2,"0")}`;
+      return `${m}:${String(s).padStart(2,"0")}`;
+    }
+
+    function withinRecency(publishedAt) {
+      const cutoff = Date.now() - (RECENCY_DAYS * 24 * 60 * 60 * 1000);
+      return new Date(publishedAt).getTime() >= cutoff;
+    }
+
+    function setCachePill(text) {
+      els.cacheText.textContent = text;
+    }
+
+    function cacheKey() {
+      return "highlights_hub_cache_v1";
+    }
+
+    function loadCache() {
+      try {
+        const raw = localStorage.getItem(cacheKey());
+        if (!raw) return null;
+        const parsed = JSON.parse(raw);
+        if (!parsed || !parsed.savedAt || !parsed.data) return null;
+        const ageMs = Date.now() - parsed.savedAt;
+        const ttlMs = CACHE_TTL_MINUTES * 60 * 1000;
+        if (ageMs > ttlMs) return null;
+        return parsed.data;
+      } catch {
+        return null;
+      }
+    }
+
+    function saveCache(data) {
+      try {
+        localStorage.setItem(cacheKey(), JSON.stringify({
+          savedAt: Date.now(),
+          data
+        }));
+      } catch {}
+    }
+
+    async function apiGet(path, params) {
+      if (!YT_API_KEY || YT_API_KEY.includes("PASTE_YOUR")) {
+        throw new Error("Missing API key. Paste your YouTube Data API key into YT_API_KEY at the top of index.html.");
+      }
+      const url = new URL(`https://www.googleapis.com/youtube/v3/${path}`);
+      Object.entries({ ...params, key: YT_API_KEY }).forEach(([k,v]) => url.searchParams.set(k, v));
+      const res = await fetch(url.toString());
+      if (!res.ok) {
+        let text = "";
+        try { text = await res.text(); } catch {}
+        throw new Error(`YouTube API error (${res.status}). ${text ? text.slice(0, 180) : ""}`.trim());
+      }
+      return await res.json();
+    }
+
+    async function resolveUploadsPlaylistId(handle) {
+      // Primary: channels.list with forHandle
+      try {
+        const data = await apiGet("channels", {
+          part: "contentDetails",
+          forHandle: handle
+        });
+        const item = data.items && data.items[0];
+        const uploads = item?.contentDetails?.relatedPlaylists?.uploads;
+        if (uploads) return uploads;
+      } catch (e) {
+        // ignore and fallback
+      }
+
+      // Fallback: search.list for channel, then channels.list by id
+      // This isn't perfect, but helps if forHandle is not supported in a given environment.
+      const search = await apiGet("search", {
+        part: "snippet",
+        q: handle,
+        type: "channel",
+        maxResults: "1"
+      });
+      const chId = search.items?.[0]?.snippet?.channelId || search.items?.[0]?.id?.channelId;
+      if (!chId) throw new Error(`Could not resolve channel for handle ${handle}.`);
+
+      const data2 = await apiGet("channels", {
+        part: "contentDetails",
+        id: chId
+      });
+      const item2 = data2.items && data2.items[0];
+      const uploads2 = item2?.contentDetails?.relatedPlaylists?.uploads;
+      if (!uploads2) throw new Error(`Could not resolve uploads playlist for ${handle}.`);
+      return uploads2;
+    }
+
+    async function fetchRecentFromUploadsPlaylist(playlistId) {
+      // Pull items newest-first; stop when older than recency window and we already have enough
+      let pageToken = "";
+      const items = [];
+      const hardMaxPages = 10; // safety; 10 pages * 50 = 500 items pre-filter
+      let pages = 0;
+
+      while (pages < hardMaxPages) {
+        pages++;
+        const data = await apiGet("playlistItems", {
+          part: "snippet,contentDetails",
+          playlistId,
+          maxResults: "50",
+          pageToken: pageToken || ""
+        });
+
+        const batch = (data.items || [])
+          .map(it => {
+            const videoId = it?.contentDetails?.videoId;
+            const publishedAt = it?.contentDetails?.videoPublishedAt || it?.snippet?.publishedAt;
+            const title = it?.snippet?.title || "";
+            const thumbs = it?.snippet?.thumbnails || {};
+            const thumb = thumbs?.medium?.url || thumbs?.high?.url || thumbs?.default?.url || "";
+            return { videoId, publishedAt, title, thumb };
+          })
+          .filter(v => v.videoId && v.publishedAt);
+
+        // If we're past recency, we can stop after seeing a chunk that's old
+        items.push(...batch);
+
+        // If last item in this page is older than cutoff, we can stop paging
+        const last = batch[batch.length - 1];
+        if (last && !withinRecency(last.publishedAt)) break;
+
+        pageToken = data.nextPageToken;
+        if (!pageToken) break;
+      }
+
+      // Keep only within recency window
+      return items.filter(v => withinRecency(v.publishedAt));
+    }
+
+    async function fetchDurations(videoIds) {
+      // videos.list supports batching multiple IDs (practically up to 50)
+      const chunks = [];
+      for (let i = 0; i < videoIds.length; i += 50) {
+        chunks.push(videoIds.slice(i, i + 50));
+      }
+
+      const durationMap = new Map(); // id => seconds
+      for (const chunk of chunks) {
+        const data = await apiGet("videos", {
+          part: "contentDetails",
+          id: chunk.join(",")
+        });
+        for (const it of (data.items || [])) {
+          const id = it.id;
+          const iso = it?.contentDetails?.duration || "";
+          durationMap.set(id, secondsFromIsoDuration(iso));
+        }
+      }
+      return durationMap;
+    }
+
+    async function loadLeague(leagueKey, force = false) {
+      const league = LEAGUES.find(l => l.key === leagueKey);
+      if (!league) return [];
+
+      // Resolve uploads playlist ID once
+      if (!uploadsPlaylistIds[leagueKey] || force) {
+        uploadsPlaylistIds[leagueKey] = await resolveUploadsPlaylistId(league.handle);
+      }
+
+      const uploadsId = uploadsPlaylistIds[leagueKey];
+      const recent = await fetchRecentFromUploadsPlaylist(uploadsId);
+
+      // Get durations and filter shorts
+      const ids = recent.map(v => v.videoId);
+      const durationMap = await fetchDurations(ids);
+
+      const normalized = recent.map(v => {
+        const durationSec = durationMap.get(v.videoId) ?? 0;
+        return {
+          league: leagueKey,
+          videoId: v.videoId,
+          title: v.title,
+          publishedAt: v.publishedAt,
+          thumb: v.thumb,
+          durationSec
+        };
+      })
+      .filter(v => v.durationSec > SHORTS_MAX_SECONDS) // exclude Shorts
+      .sort((a,b) => new Date(b.publishedAt) - new Date(a.publishedAt));
+
+      return normalized.slice(0, MAX_VIDEOS_PER_LEAGUE);
+    }
+
+    function buildTabs() {
+      els.tabs.innerHTML = "";
+      for (const t of TABS) {
+        const btn = document.createElement("button");
+        btn.className = "tab" + (t === activeTab ? " active" : "");
+        btn.type = "button";
+        btn.textContent = t;
+        btn.addEventListener("click", () => {
+          activeTab = t;
+          els.search.value = "";
+          updateTabActive();
+          renderCurrent();
+        });
+        els.tabs.appendChild(btn);
+      }
+    }
+
+    function updateTabActive() {
+      [...els.tabs.querySelectorAll(".tab")].forEach((b) => {
+        b.classList.toggle("active", b.textContent === activeTab);
+      });
+    }
+
+    function getCurrentList() {
+      if (activeTab === "Latest") return allVideos;
+      return perLeague[activeTab] || [];
+    }
+
+    function applySearchFilter(list) {
+      const q = (els.search.value || "").trim().toLowerCase();
+      if (!q) return list;
+      return list.filter(v => (v.title || "").toLowerCase().includes(q));
+    }
+
+    function renderSkeleton(count = 6) {
+      els.list.innerHTML = "";
+      for (let i = 0; i < count; i++) {
+        const sk = document.createElement("div");
+        sk.className = "card";
+        sk.style.cursor = "default";
+        sk.innerHTML = `
+          <div style="width:140px;height:92px;background:rgba(255,255,255,0.06)"></div>
+          <div class="meta">
+            <div style="height:14px;width:90%;background:rgba(255,255,255,0.07);border-radius:8px"></div>
+            <div style="height:14px;width:72%;background:rgba(255,255,255,0.06);border-radius:8px"></div>
+            <div style="height:12px;width:60%;background:rgba(255,255,255,0.05);border-radius:8px;margin-top:6px"></div>
+          </div>
+        `;
+        els.list.appendChild(sk);
+      }
+    }
+
+    function renderList(list) {
+      els.list.innerHTML = "";
+      if (!list.length) {
+        showStatus("No videos found for this tab (or everything was filtered as Shorts). Try Refresh.", "info");
+        return;
+      }
+      hideStatus();
+
+      for (const v of list) {
+        const card = document.createElement("div");
+        card.className = "card";
+        card.title = "Tap to play";
+        card.innerHTML = `
+          <img class="thumb" src="${escapeHtml(v.thumb)}" alt="">
+          <div class="meta">
+            <p class="title">${escapeHtml(v.title)}</p>
+            <div class="subrow">
+              <span class="badge">${escapeHtml(v.league)}</span>
+              <span class="dot">•</span>
+              <span>${escapeHtml(formatDate(v.publishedAt))}</span>
+              <span class="dot">•</span>
+              <span>${escapeHtml(formatDuration(v.durationSec))}</span>
+            </div>
+          </div>
+        `;
+        card.addEventListener("click", () => openPlayer(v));
+        els.list.appendChild(card);
+      }
+    }
+
+    function renderCurrent() {
+      const base = getCurrentList();
+      filteredVideos = applySearchFilter(base);
+      renderList(filteredVideos);
+      setCachePill(cacheLabel());
+    }
+
+    function cacheLabel() {
+      const raw = localStorage.getItem(cacheKey());
+      if (!raw) return "empty";
+      try {
+        const parsed = JSON.parse(raw);
+        if (!parsed?.savedAt) return "unknown";
+        const mins = Math.floor((Date.now() - parsed.savedAt) / 60000);
+        return mins <= 0 ? "fresh" : `${mins}m old`;
+      } catch {
+        return "unknown";
+      }
+    }
+
+    function escapeHtml(str) {
+      return String(str || "")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
+    function openPlayer(video) {
+      els.playerLeague.textContent = video.league;
+      els.playerTitle.textContent = video.title || "";
+      // rel=0 shows related videos from the same channel (YouTube behavior may vary)
+      els.playerFrame.src = `https://www.youtube.com/embed/${encodeURIComponent(video.videoId)}?autoplay=1&rel=0&modestbranding=1`;
+      els.player.classList.add("show");
+    }
+
+    function closePlayer() {
+      els.player.classList.remove("show");
+      els.playerFrame.src = ""; // stop playback
+    }
+
+    async function loadAll(force = false) {
+      renderSkeleton();
+      hideStatus();
+
+      // Cache first
+      if (!force) {
+        const cached = loadCache();
+        if (cached?.allVideos && cached?.perLeague && cached?.uploadsPlaylistIds) {
+          allVideos = cached.allVideos;
+          perLeague = cached.perLeague;
+          uploadsPlaylistIds = cached.uploadsPlaylistIds;
+          showStatus("Loaded from cache. Hit Refresh to pull the latest.", "ok");
+          renderCurrent();
+          return;
+        }
+      }
+
+      showStatus("Fetching latest videos from YouTube…", "info");
+
+      try {
+        // Load leagues in parallel
+        const results = await Promise.all(LEAGUES.map(l => loadLeague(l.key, force)));
+
+        perLeague = {};
+        for (let i = 0; i < LEAGUES.length; i++) {
+          perLeague[LEAGUES[i].key] = results[i];
+        }
+
+        allVideos = Object.values(perLeague).flat()
+          .sort((a,b) => new Date(b.publishedAt) - new Date(a.publishedAt));
+
+        // Save cache
+        saveCache({ allVideos, perLeague, uploadsPlaylistIds });
+
+        showStatus("Done. Videos updated.", "ok");
+        renderCurrent();
+      } catch (e) {
+        console.error(e);
+        showStatus(`${e.message || e}`, "error");
+        els.list.innerHTML = "";
+      }
+    }
+
+    function wireEvents() {
+      els.search.addEventListener("input", () => renderCurrent());
+      els.refresh.addEventListener("click", () => loadAll(true));
+      els.closePlayer.addEventListener("click", closePlayer);
+      els.player.addEventListener("click", (ev) => {
+        // click outside panel closes
+        if (ev.target === els.player) closePlayer();
+      });
+      document.addEventListener("keydown", (ev) => {
+        if (ev.key === "Escape") closePlayer();
+      });
+    }
+
+    // Init
+    buildTabs();
+    wireEvents();
+    setCachePill(cacheLabel());
+    loadAll(false);
+  </script>
+</body>
+</html>
