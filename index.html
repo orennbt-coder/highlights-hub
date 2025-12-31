@@ -8,7 +8,6 @@
     :root {
       --bg: #0b0d12;
       --card: #121622;
-      --card2: #0f1320;
       --text: #e8ecf6;
       --muted: #aab3c7;
       --line: rgba(255,255,255,0.10);
@@ -18,90 +17,37 @@
       --shadow: 0 10px 30px rgba(0,0,0,0.35);
       --radius: 14px;
     }
-
     * { box-sizing: border-box; }
     body {
       margin: 0;
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
       color: var(--text);
       background: radial-gradient(900px 500px at 20% 0%, rgba(122,162,255,0.18), transparent 65%),
                   radial-gradient(900px 500px at 90% 20%, rgba(61,220,151,0.10), transparent 60%),
                   var(--bg);
       min-height: 100vh;
     }
-
-    a { color: inherit; }
-
-    .container {
-      max-width: 1050px;
-      margin: 0 auto;
-      padding: 18px 14px 36px;
-    }
-
-    header {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 12px;
-      margin-bottom: 14px;
-    }
-
-    .brand {
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-    }
-
-    .brand h1 {
-      font-size: 18px;
-      margin: 0;
-      letter-spacing: 0.2px;
-    }
-
-    .brand p {
-      margin: 0;
-      color: var(--muted);
-      font-size: 13px;
-      line-height: 1.35;
-    }
-
+    .container { max-width: 1050px; margin: 0 auto; padding: 18px 14px 36px; }
+    header { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 14px; }
+    .brand { display: flex; flex-direction: column; gap: 2px; }
+    .brand h1 { font-size: 18px; margin: 0; letter-spacing: 0.2px; }
+    .brand p { margin: 0; color: var(--muted); font-size: 13px; line-height: 1.35; }
     .pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 8px 10px;
-      border: 1px solid var(--line);
-      background: rgba(255,255,255,0.04);
-      border-radius: 999px;
-      font-size: 12px;
-      color: var(--muted);
-      user-select: none;
-      white-space: nowrap;
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 8px 10px; border: 1px solid var(--line);
+      background: rgba(255,255,255,0.04); border-radius: 999px;
+      font-size: 12px; color: var(--muted); user-select: none; white-space: nowrap;
     }
-
     .tabs {
-      display: flex;
-      gap: 8px;
-      align-items: center;
-      padding: 10px;
-      border: 1px solid var(--line);
-      background: rgba(255,255,255,0.035);
-      border-radius: var(--radius);
-      overflow-x: auto;
-      -webkit-overflow-scrolling: touch;
+      display: flex; gap: 8px; align-items: center;
+      padding: 10px; border: 1px solid var(--line);
+      background: rgba(255,255,255,0.035); border-radius: var(--radius);
+      overflow-x: auto; -webkit-overflow-scrolling: touch;
     }
-
     .tab {
-      appearance: none;
-      border: 1px solid transparent;
-      background: transparent;
-      color: var(--muted);
-      padding: 10px 12px;
-      border-radius: 12px;
-      cursor: pointer;
-      font-weight: 600;
-      letter-spacing: 0.2px;
-      transition: 160ms ease;
+      appearance: none; border: 1px solid transparent; background: transparent;
+      color: var(--muted); padding: 10px 12px; border-radius: 12px;
+      cursor: pointer; font-weight: 600; letter-spacing: 0.2px; transition: 160ms ease;
       flex: 0 0 auto;
     }
     .tab:hover { background: rgba(255,255,255,0.05); color: var(--text); }
@@ -110,77 +56,37 @@
       border-color: rgba(122,162,255,0.35);
       color: var(--text);
     }
-
-    .controls {
-      display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 10px;
-      margin: 12px 0 12px;
-    }
-
-    .search {
-      position: relative;
-    }
-
+    .controls { display: grid; grid-template-columns: 1fr auto; gap: 10px; margin: 12px 0; }
+    .search { position: relative; }
     input[type="search"] {
-      width: 100%;
-      padding: 12px 12px 12px 40px;
-      border-radius: 12px;
-      border: 1px solid var(--line);
-      background: rgba(255,255,255,0.03);
-      color: var(--text);
-      outline: none;
-      font-size: 14px;
+      width: 100%; padding: 12px 12px 12px 40px;
+      border-radius: 12px; border: 1px solid var(--line);
+      background: rgba(255,255,255,0.03); color: var(--text);
+      outline: none; font-size: 14px;
     }
     input[type="search"]::placeholder { color: rgba(170,179,199,0.75); }
-
-    .search svg {
-      position: absolute;
-      left: 12px;
-      top: 50%;
-      transform: translateY(-50%);
-      opacity: 0.75;
-    }
-
+    .search svg { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); opacity: 0.75; }
     .btn {
-      appearance: none;
-      border: 1px solid var(--line);
-      background: rgba(255,255,255,0.035);
-      color: var(--text);
-      padding: 10px 12px;
-      border-radius: 12px;
-      cursor: pointer;
-      font-weight: 700;
-      letter-spacing: 0.2px;
-      transition: 160ms ease;
-      white-space: nowrap;
+      appearance: none; border: 1px solid var(--line);
+      background: rgba(255,255,255,0.035); color: var(--text);
+      padding: 10px 12px; border-radius: 12px; cursor: pointer;
+      font-weight: 700; letter-spacing: 0.2px; transition: 160ms ease; white-space: nowrap;
     }
     .btn:hover { background: rgba(255,255,255,0.06); }
     .btn:active { transform: translateY(1px); }
-    .btn.primary {
-      border-color: rgba(122,162,255,0.40);
-      background: rgba(122,162,255,0.16);
-    }
+    .btn.primary { border-color: rgba(122,162,255,0.40); background: rgba(122,162,255,0.16); }
 
     .status {
-      margin: 10px 0 14px;
-      padding: 12px;
-      border-radius: var(--radius);
-      border: 1px solid var(--line);
-      background: rgba(255,255,255,0.03);
-      color: var(--muted);
-      display: none;
+      margin: 10px 0 14px; padding: 12px; border-radius: var(--radius);
+      border: 1px solid var(--line); background: rgba(255,255,255,0.03);
+      color: var(--muted); display: none;
+      word-break: break-word;
     }
     .status.show { display: block; }
     .status.error { border-color: rgba(255,107,107,0.35); background: rgba(255,107,107,0.10); color: var(--text); }
     .status.ok { border-color: rgba(61,220,151,0.35); background: rgba(61,220,151,0.10); color: var(--text); }
 
-    .grid {
-      display: grid;
-      gap: 10px;
-      grid-template-columns: 1fr;
-    }
-
+    .grid { display: grid; gap: 10px; grid-template-columns: 1fr; }
     @media (min-width: 740px) {
       .grid { grid-template-columns: 1fr 1fr; }
       header { align-items: center; }
@@ -200,59 +106,25 @@
       min-height: 92px;
     }
     .card:hover { transform: translateY(-1px); border-color: rgba(255,255,255,0.18); }
-    .thumb {
-      width: 140px;
-      height: 92px;
-      background: rgba(255,255,255,0.05);
-      display: block;
-      object-fit: cover;
-    }
-    .meta {
-      padding: 10px 12px 10px;
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-      min-width: 0;
-    }
+    .thumb { width: 140px; height: 92px; background: rgba(255,255,255,0.05); display: block; object-fit: cover; }
+    .meta { padding: 10px 12px; display: flex; flex-direction: column; gap: 6px; min-width: 0; }
     .title {
-      font-size: 14px;
-      line-height: 1.25;
-      margin: 0;
-      font-weight: 800;
-      overflow: hidden;
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
+      font-size: 14px; line-height: 1.25; margin: 0; font-weight: 800;
+      overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
     }
-    .subrow {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-      align-items: center;
-      color: var(--muted);
-      font-size: 12px;
-    }
+    .subrow { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; color: var(--muted); font-size: 12px; }
     .badge {
       border: 1px solid var(--line);
       background: rgba(255,255,255,0.03);
-      padding: 3px 8px;
-      border-radius: 999px;
-      font-weight: 800;
-      letter-spacing: 0.3px;
-      color: var(--text);
+      padding: 3px 8px; border-radius: 999px;
+      font-weight: 800; letter-spacing: 0.3px; color: var(--text);
     }
     .dot { opacity: 0.7; }
 
-    /* Player view */
     .player {
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.75);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      padding: 14px;
-      z-index: 20;
+      position: fixed; inset: 0; background: rgba(0,0,0,0.75);
+      display: none; align-items: center; justify-content: center;
+      padding: 14px; z-index: 20;
     }
     .player.show { display: flex; }
     .playerPanel {
@@ -264,29 +136,14 @@
       box-shadow: var(--shadow);
     }
     .playerTop {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      padding: 12px 12px;
-      border-bottom: 1px solid var(--line);
+      display: flex; align-items: center; justify-content: space-between; gap: 10px;
+      padding: 12px; border-bottom: 1px solid var(--line);
       background: rgba(255,255,255,0.02);
     }
-    .playerTop .left {
-      display: flex;
-      gap: 10px;
-      align-items: center;
-      min-width: 0;
-    }
+    .playerTop .left { display: flex; gap: 10px; align-items: center; min-width: 0; }
     .playerTop .h {
-      font-weight: 900;
-      font-size: 14px;
-      margin: 0;
-      line-height: 1.25;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      max-width: 68vw;
+      font-weight: 900; font-size: 14px; margin: 0; line-height: 1.25;
+      overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 68vw;
     }
     .closeBtn {
       border: 1px solid var(--line);
@@ -297,34 +154,14 @@
       cursor: pointer;
       font-weight: 900;
     }
-    .frameWrap {
-      position: relative;
-      width: 100%;
-      aspect-ratio: 16 / 9;
-      background: #000;
-    }
-    .frameWrap iframe {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      border: 0;
-    }
+    .frameWrap { position: relative; width: 100%; aspect-ratio: 16 / 9; background: #000; }
+    .frameWrap iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
 
-    .footerNote {
-      margin-top: 14px;
-      color: var(--muted);
-      font-size: 12px;
-      line-height: 1.4;
-      opacity: 0.95;
-    }
-
-    .mono {
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-      font-size: 12px;
-    }
+    .footerNote { margin-top: 14px; color: var(--muted); font-size: 12px; line-height: 1.4; opacity: 0.95; }
+    .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; font-size: 12px; }
   </style>
 </head>
+
 <body>
   <div class="container">
     <header>
@@ -360,7 +197,6 @@
     </p>
   </div>
 
-  <!-- Player overlay -->
   <div class="player" id="player">
     <div class="playerPanel">
       <div class="playerTop">
@@ -371,7 +207,9 @@
         <button class="closeBtn" id="closePlayer" type="button">Close</button>
       </div>
       <div class="frameWrap">
-        <iframe id="playerFrame" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+        <iframe id="playerFrame"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowfullscreen></iframe>
       </div>
     </div>
   </div>
@@ -380,19 +218,25 @@
     /***********************
      * USER CONFIG
      ***********************/
+    // Paste your API key here (example format starts with "AIza...")
     const YT_API_KEY = "AIzaSyD-example1234567890";
 
-    // Feeds (handles)
+    // Official channel URLs (for reference):
+    // NFL: https://www.youtube.com/@NFL
+    // MLB: https://www.youtube.com/@MLB
+    // NBA: https://www.youtube.com/@NBA
+    //
+    // Using stable Channel IDs to avoid forHandle issues:
     const LEAGUES = [
-  { key: "NFL", channelId: "UCiWLfSweyRNmLpgEHekhoAg" },
-  { key: "MLB", channelId: "UCoLrcjPV5PbUrUyXq5mjc_A" },
-  { key: "NBA", channelId: "UCWJ2lWNubArHWmf3FIHbfcQ" },
-];
+      { key: "NFL", channelId: "UCiWLfSweyRNmLpgEHekhoAg" },
+      { key: "MLB", channelId: "UCoLrcjPV5PbUrUyXq5mjc_A" },
+      { key: "NBA", channelId: "UCWJ2lWNubArHWmf3FIHbfcQ" },
+    ];
 
     // Tweaks you might want to adjust:
     const MAX_VIDEOS_PER_LEAGUE = 200;       // after filtering Shorts
     const RECENCY_DAYS = 90;                 // only include videos published in last N days
-    const SHORTS_MAX_SECONDS = 59;           // exclude <= 59s (Shorts). Raise to 89 if you want stricter.
+    const SHORTS_MAX_SECONDS = 59;           // exclude <= 59s. Raise to 89 if you want stricter.
     const CACHE_TTL_MINUTES = 30;            // cache results in localStorage for N minutes
 
     /***********************
@@ -400,10 +244,9 @@
      ***********************/
     const TABS = ["Latest", ...LEAGUES.map(l => l.key)];
     let activeTab = "Latest";
-    let allVideos = [];     // normalized merged list
-    let perLeague = {};     // key => list
-    let filteredVideos = []; // current tab (post-search)
-    let uploadsPlaylistIds = {}; // key => playlistId
+    let allVideos = [];
+    let perLeague = {};
+    let uploadsPlaylistIds = {};
 
     const els = {
       tabs: document.getElementById("tabs"),
@@ -425,7 +268,6 @@
       if (variant === "ok") els.status.classList.add("ok");
       els.status.textContent = message;
     }
-
     function hideStatus() {
       els.status.className = "status";
       els.status.textContent = "";
@@ -441,7 +283,6 @@
     }
 
     function secondsFromIsoDuration(iso) {
-      // ISO 8601 duration like PT1H2M10S / PT45S / PT3M
       const match = iso.match(/^PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?$/);
       if (!match) return 0;
       const h = parseInt(match[1] || "0", 10);
@@ -464,13 +305,7 @@
       return new Date(publishedAt).getTime() >= cutoff;
     }
 
-    function setCachePill(text) {
-      els.cacheText.textContent = text;
-    }
-
-    function cacheKey() {
-      return "highlights_hub_cache_v1";
-    }
+    function cacheKey() { return "highlights_hub_cache_v2"; }
 
     function loadCache() {
       try {
@@ -482,85 +317,87 @@
         const ttlMs = CACHE_TTL_MINUTES * 60 * 1000;
         if (ageMs > ttlMs) return null;
         return parsed.data;
-      } catch {
-        return null;
-      }
+      } catch { return null; }
     }
 
     function saveCache(data) {
       try {
-        localStorage.setItem(cacheKey(), JSON.stringify({
-          savedAt: Date.now(),
-          data
-        }));
+        localStorage.setItem(cacheKey(), JSON.stringify({ savedAt: Date.now(), data }));
       } catch {}
+    }
+
+    function cacheLabel() {
+      const raw = localStorage.getItem(cacheKey());
+      if (!raw) return "empty";
+      try {
+        const parsed = JSON.parse(raw);
+        if (!parsed?.savedAt) return "unknown";
+        const mins = Math.floor((Date.now() - parsed.savedAt) / 60000);
+        return mins <= 0 ? "fresh" : `${mins}m old`;
+      } catch { return "unknown"; }
+    }
+
+    function setCachePill(text) { els.cacheText.textContent = text; }
+
+    function escapeHtml(str) {
+      return String(str || "")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
     }
 
     async function apiGet(path, params) {
       if (!YT_API_KEY || YT_API_KEY.includes("PASTE_YOUR")) {
-        throw new Error("Missing API key. Paste your YouTube Data API key into YT_API_KEY at the top of index.html.");
+        throw new Error("Missing API key. Paste your YouTube Data API key into YT_API_KEY at the top of index.html");
       }
       const url = new URL(`https://www.googleapis.com/youtube/v3/${path}`);
-      Object.entries({ ...params, key: YT_API_KEY }).forEach(([k,v]) => url.searchParams.set(k, v));
+
+      // IMPORTANT: skip empty params (prevents 400s like invalid pageToken)
+      Object.entries({ ...params, key: YT_API_KEY }).forEach(([k, v]) => {
+        if (v === undefined || v === null || v === "") return;
+        url.searchParams.set(k, String(v));
+      });
+
       const res = await fetch(url.toString());
       if (!res.ok) {
         let text = "";
         try { text = await res.text(); } catch {}
-        throw new Error(`YouTube API error (${res.status}). ${text ? text.slice(0, 180) : ""}`.trim());
+        // Show the real response to make debugging easy
+        throw new Error(`YouTube API error (${res.status}). ${text}`.trim());
       }
       return await res.json();
     }
 
-    async function resolveUploadsPlaylistId(handle) {
-      // Primary: channels.list with forHandle
-      try {
-        const data = await apiGet("channels", {
-          part: "contentDetails",
-          forHandle: handle
-        });
-        const item = data.items && data.items[0];
-        const uploads = item?.contentDetails?.relatedPlaylists?.uploads;
-        if (uploads) return uploads;
-      } catch (e) {
-        // ignore and fallback
-      }
-
-      // Fallback: search.list for channel, then channels.list by id
-      // This isn't perfect, but helps if forHandle is not supported in a given environment.
-      const search = await apiGet("search", {
-        part: "snippet",
-        q: handle,
-        type: "channel",
-        maxResults: "1"
-      });
-      const chId = search.items?.[0]?.snippet?.channelId || search.items?.[0]?.id?.channelId;
-      if (!chId) throw new Error(`Could not resolve channel for handle ${handle}.`);
-
-      const data2 = await apiGet("channels", {
+    async function resolveUploadsPlaylistId(channelId) {
+      const data = await apiGet("channels", {
         part: "contentDetails",
-        id: chId
+        id: channelId
       });
-      const item2 = data2.items && data2.items[0];
-      const uploads2 = item2?.contentDetails?.relatedPlaylists?.uploads;
-      if (!uploads2) throw new Error(`Could not resolve uploads playlist for ${handle}.`);
-      return uploads2;
+      const item = data.items && data.items[0];
+      const uploads = item?.contentDetails?.relatedPlaylists?.uploads;
+      if (!uploads) throw new Error("Could not resolve uploads playlist.");
+      return uploads;
     }
 
     async function fetchRecentFromUploadsPlaylist(playlistId) {
-      // Pull items newest-first; stop when older than recency window and we already have enough
-      let pageToken = "";
+      let pageToken = null;
       const items = [];
-      const hardMaxPages = 10; // safety; 10 pages * 50 = 500 items pre-filter
+      const hardMaxPages = 10; // safety: 10 pages * 50 = 500 items pre-filter
       let pages = 0;
 
       while (pages < hardMaxPages) {
         pages++;
-        const data = await apiGet("playlistItems", {
+
+        const params = {
           part: "snippet,contentDetails",
           playlistId,
           maxResults: "50",
-          pageToken: pageToken || ""
-        });
+        };
+        if (pageToken) params.pageToken = pageToken;
+
+        const data = await apiGet("playlistItems", params);
 
         const batch = (data.items || [])
           .map(it => {
@@ -573,29 +410,24 @@
           })
           .filter(v => v.videoId && v.publishedAt);
 
-        // If we're past recency, we can stop after seeing a chunk that's old
         items.push(...batch);
 
-        // If last item in this page is older than cutoff, we can stop paging
+        // stop paging if content already older than our recency window
         const last = batch[batch.length - 1];
         if (last && !withinRecency(last.publishedAt)) break;
 
-        pageToken = data.nextPageToken;
+        pageToken = data.nextPageToken || null;
         if (!pageToken) break;
       }
 
-      // Keep only within recency window
       return items.filter(v => withinRecency(v.publishedAt));
     }
 
     async function fetchDurations(videoIds) {
-      // videos.list supports batching multiple IDs (practically up to 50)
       const chunks = [];
-      for (let i = 0; i < videoIds.length; i += 50) {
-        chunks.push(videoIds.slice(i, i + 50));
-      }
+      for (let i = 0; i < videoIds.length; i += 50) chunks.push(videoIds.slice(i, i + 50));
 
-      const durationMap = new Map(); // id => seconds
+      const durationMap = new Map();
       for (const chunk of chunks) {
         const data = await apiGet("videos", {
           part: "contentDetails",
@@ -614,15 +446,13 @@
       const league = LEAGUES.find(l => l.key === leagueKey);
       if (!league) return [];
 
-      // Resolve uploads playlist ID once
       if (!uploadsPlaylistIds[leagueKey] || force) {
-        uploadsPlaylistIds[leagueKey] = await resolveUploadsPlaylistId(league.handle);
+        uploadsPlaylistIds[leagueKey] = await resolveUploadsPlaylistId(league.channelId);
       }
 
       const uploadsId = uploadsPlaylistIds[leagueKey];
       const recent = await fetchRecentFromUploadsPlaylist(uploadsId);
 
-      // Get durations and filter shorts
       const ids = recent.map(v => v.videoId);
       const durationMap = await fetchDurations(ids);
 
@@ -727,51 +557,26 @@
 
     function renderCurrent() {
       const base = getCurrentList();
-      filteredVideos = applySearchFilter(base);
-      renderList(filteredVideos);
+      const filtered = applySearchFilter(base);
+      renderList(filtered);
       setCachePill(cacheLabel());
-    }
-
-    function cacheLabel() {
-      const raw = localStorage.getItem(cacheKey());
-      if (!raw) return "empty";
-      try {
-        const parsed = JSON.parse(raw);
-        if (!parsed?.savedAt) return "unknown";
-        const mins = Math.floor((Date.now() - parsed.savedAt) / 60000);
-        return mins <= 0 ? "fresh" : `${mins}m old`;
-      } catch {
-        return "unknown";
-      }
-    }
-
-    function escapeHtml(str) {
-      return String(str || "")
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("'", "&#039;");
     }
 
     function openPlayer(video) {
       els.playerLeague.textContent = video.league;
       els.playerTitle.textContent = video.title || "";
-      // rel=0 shows related videos from the same channel (YouTube behavior may vary)
       els.playerFrame.src = `https://www.youtube.com/embed/${encodeURIComponent(video.videoId)}?autoplay=1&rel=0&modestbranding=1`;
       els.player.classList.add("show");
     }
-
     function closePlayer() {
       els.player.classList.remove("show");
-      els.playerFrame.src = ""; // stop playback
+      els.playerFrame.src = "";
     }
 
     async function loadAll(force = false) {
       renderSkeleton();
       hideStatus();
 
-      // Cache first
       if (!force) {
         const cached = loadCache();
         if (cached?.allVideos && cached?.perLeague && cached?.uploadsPlaylistIds) {
@@ -787,26 +592,21 @@
       showStatus("Fetching latest videos from YouTube…", "info");
 
       try {
-        // Load leagues in parallel
         const results = await Promise.all(LEAGUES.map(l => loadLeague(l.key, force)));
-
         perLeague = {};
-        for (let i = 0; i < LEAGUES.length; i++) {
-          perLeague[LEAGUES[i].key] = results[i];
-        }
+        for (let i = 0; i < LEAGUES.length; i++) perLeague[LEAGUES[i].key] = results[i];
 
         allVideos = Object.values(perLeague).flat()
           .sort((a,b) => new Date(b.publishedAt) - new Date(a.publishedAt));
 
-        // Save cache
         saveCache({ allVideos, perLeague, uploadsPlaylistIds });
 
         showStatus("Done. Videos updated.", "ok");
         renderCurrent();
       } catch (e) {
         console.error(e);
-        showStatus(`${e.message || e}`, "error");
         els.list.innerHTML = "";
+        showStatus(e.message || String(e), "error");
       }
     }
 
@@ -814,13 +614,8 @@
       els.search.addEventListener("input", () => renderCurrent());
       els.refresh.addEventListener("click", () => loadAll(true));
       els.closePlayer.addEventListener("click", closePlayer);
-      els.player.addEventListener("click", (ev) => {
-        // click outside panel closes
-        if (ev.target === els.player) closePlayer();
-      });
-      document.addEventListener("keydown", (ev) => {
-        if (ev.key === "Escape") closePlayer();
-      });
+      els.player.addEventListener("click", (ev) => { if (ev.target === els.player) closePlayer(); });
+      document.addEventListener("keydown", (ev) => { if (ev.key === "Escape") closePlayer(); });
     }
 
     // Init
